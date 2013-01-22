@@ -8,8 +8,8 @@ class register extends CI_Controller
 		$this->load->library('session');
 		$this->load->helper('url');
 		$this->load->model('AccountsModel', 'AccountsManager');
+		$this->load->model('RegisterModel', 'RegisterManager');
 		$this->load->database();
-		$this->load->library('form_validation');
 	}
 	public function index()
 	{
@@ -35,6 +35,10 @@ class register extends CI_Controller
 			else if($cap != $this->session->userdata('captcha'))
 			{
 				echo 'Captcha incorrect.';
+			}
+			else if(!$this->RegisterManager->pseudoDispo($ndc))
+			{
+				echo 'Nom de compte déjà pris.';
 			}
 			else
 			{
